@@ -20,3 +20,4 @@ old vacuum? This can fix 2 of those.
 
 ![Shark Matrix Vacuum](static/masked_image.png)
 
+The Shark Matrix Robot vacuum is a great vacuum that 
