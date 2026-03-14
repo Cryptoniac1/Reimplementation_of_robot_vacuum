@@ -20,4 +20,5 @@ old vacuum? This can fix 2 of those.
 
 ![Shark Matrix Vacuum](static/masked_image.png)
 
-The Shark Matrix Robot vacuum is a great vacuum that 
+The Shark Matrix Robot vacuum is a great vacuum that has LIDAR, crash sensors,
+self emptying technology, mapping functionality.
