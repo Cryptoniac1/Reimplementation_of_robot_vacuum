@@ -190,13 +190,15 @@ it with a remote and define your area? Well that&rsquo;s exactly what this proje
 does.</p>
 <h1 id="toc">TOC<a href="#toc" class="hanchor" ariaLabel="Anchor">#</a> </h1>
 <ul>
-<li><a href="/Reimplementation_of_robot_vacuum/showcase/#demo-video">Demo</a></li>
 <li><a href="/Reimplementation_of_robot_vacuum/showcase/#hardware">Hardware</a>
 <ul>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#robot-vacuum">Robot Vacuum</a></li>
 <li><a href="/Reimplementation_of_robot_vacuum/showcase/#texas-instrument-cc3200">Texas Instrument CC3200</a></li>
 <li><a href="/Reimplementation_of_robot_vacuum/showcase/#adafruit-eyespi-oled">Adafruit OLED</a></li>
 <li><a href="/Reimplementation_of_robot_vacuum/showcase/#remote">Remote</a></li>
 <li><a href="/Reimplementation_of_robot_vacuum/showcase/#ir-receiver">IR Receiver</a></li>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase#voltage-converters">Voltage Converters</a></li>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase#289n-h-bridge">L289N H-Bridge</a></li>
 </ul>
 </li>
 <li><a href="/Reimplementation_of_robot_vacuum/showcase/#hardware">Architecture</a>
@@ -206,32 +208,33 @@ does.</p>
 <li><a href="/Reimplementation_of_robot_vacuum/showcase/#pinout-used">Pinout of CC3200</a></li>
 </ul>
 </li>
-<li><a href="/Reimplementation_of_robot_vacuum/showcase/#digital">Digital</a></li>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#digital">Digital</a>
+<ul>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#interrupts">Interrupts</a></li>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#aws">AWS</a></li>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#loop">Loop</a></li>
 </ul>
 </li>
 </ul>
-<h1 id="demo-video">Demo Video<a href="#demo-video" class="hanchor" ariaLabel="Anchor">#</a> </h1>
-<figure>
-  <video controls width="400">
-    <source src="/Reimplementation_of_robot_vacuum/part1.mp4" type="video/mp4">
-  </video>
-  <figcaption>Demo Showing Mapping Mode</figcaption>
-</figure>
-<figure>
-  <video controls width="400">
-    <source src="/Reimplementation_of_robot_vacuum/part2.mp4" type="video/mp4">
-  </video>
-  <figcaption>Demo an already active map</figcaption>
-</figure>
+</li>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#demo-video">Demo</a></li>
+</ul>
 <h1 id="hardware">Hardware<a href="#hardware" class="hanchor" ariaLabel="Anchor">#</a> </h1>
+<h2 id="robot-vacuum">Robot Vacuum<a href="#robot-vacuum" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p><img src="/Reimplementation_of_robot_vacuum/masked_image.png" alt="Shark Matrix Vacuum"></p>
+<p>The Shark Matrix Robot Vacuum was used for this project. The choice came down to
+the fact that I was able to get an old one that was to be thrown away. It has
+many sensors such as: LIDAR, Camera, Crash, and depth. Not all of these were
+implemented as it was outside of the scope of the project.</p>
 <h2 id="texas-instrument-cc3200">Texas Instrument CC3200<a href="#texas-instrument-cc3200" class="hanchor" ariaLabel="Anchor">#</a> </h2>
 <p><img src="/Reimplementation_of_robot_vacuum/board.png" alt="CC3200"></p>
 <p>The TI CC3200 is a board that has many built-in sensors, including an
 accelerometer, 4 hardware timers, and over 15 addressable GPIO pins. It also has
 built-in support for I2C, SPI, and many other protocols. This board was the
 brains of the operation that controlled the motors, and the accelerometer was
-used for detection of whether or not it was on an edge. The pinout for this
-board can be viewed <a href="/Reimplementation_of_robot_vacuum/showcase/#pinout-used">here</a>.</p>
+used for detection of whether or not it was on an edge. To read the
+accelerometer you must communicate with it using I2C. The pinout for this board
+can be viewed <a href="/Reimplementation_of_robot_vacuum/showcase/#pinout-used">here</a>.</p>
 <h2 id="adafruit-eyespi-oled">Adafruit EYESPI OLED<a href="#adafruit-eyespi-oled" class="hanchor" ariaLabel="Anchor">#</a> </h2>
 <p><img src="/Reimplementation_of_robot_vacuum/1431-18.jpg" alt="Adafruit OLED"></p>
 <p>To display information about the vacuum to the user the Adafruit EYESPI OLED was
@@ -249,8 +252,21 @@ see <a href="/Reimplementation_of_robot_vacuum/showcase/#digital">digital</a>.</
 8 of the CC3200, and was given 5v input from the battery with a low pass filter
 of a 100Ω resistor and a 100µF capacitor. Its signal was controlled via
 interrupts.</p>
+<h2 id="voltage-converters">Voltage Converters<a href="#voltage-converters" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p><img src="/Reimplementation_of_robot_vacuum/61OeeOgShLL._AC_SL1500_.jpg" alt="The Voltage Converters"></p>
+<p>The voltage converters were connected to the original battery to supply the
+correct voltage to the CC3200, and to the motors. One converter was used to
+convert from the 30v battery to 20V for the motors, and one was used to convert
+from 30V to 5V.</p>
+<h2 id="l289n-h-bridge">L289N H-Bridge<a href="#l289n-h-bridge" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p><img src="/Reimplementation_of_robot_vacuum/712PvtiaP9L._AC_SL1500_.jpg" alt="The Bridges"></p>
+<p>These bridges were used to control the motors. The original battery was
+connected to the <a href="/Reimplementation_of_robot_vacuum/showcase#voltage-converters">voltage converters</a> which were connected to these for the
+20v to control the motors (it can take up to 35 without problem), and 5v for the
+board to drive them.</p>
 <h1 id="architecture">Architecture<a href="#architecture" class="hanchor" ariaLabel="Anchor">#</a> </h1>
 <h2 id="electrical">Electrical<a href="#electrical" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p><img src="/Reimplementation_of_robot_vacuum/grim_26-03-13-1773459561.png" alt="System Architecture Diagram"></p>
 <h3 id="pinout-used">Pinout used<a href="#pinout-used" class="hanchor" ariaLabel="Anchor">#</a> </h3>
 <p>The wiring of the board is as follows:</p>
 <table>
@@ -360,6 +376,161 @@ interrupts.</p>
   </tbody>
 </table>
 <h2 id="digital">Digital<a href="#digital" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<h3 id="interrupts">Interrupts<a href="#interrupts" class="hanchor" ariaLabel="Anchor">#</a> </h3>
+<p>There were a variety of interrupts used. The first was a GPIO interrupt for the
+IR receiver, a GPIO interrupt for the crash sensors (unimplemented), a GPIO
+interrupt for the onboard pins, a timer interrupt for correcting the motors, and
+finally a timer interrupt for reading the remote data.</p>
+<h4 id="gpio-crash-and-button-interrupts">GPIO Crash and Button Interrupts<a href="#gpio-crash-and-button-interrupts" class="hanchor" ariaLabel="Anchor">#</a> </h4>
+<p>The crash sensors that were built into the Robot Vacuum were unable to give
+usable data within the time period allotted. As such in code they were
+implemented but unused.</p>
+<p>The onboard buttons, however, made use of an interrupt to set which button is
+pressed. As shown in <a href="/Reimplementation_of_robot_vacuum/showcase/#loop">loop</a>,
+almost everything can be done through buttons 1, and 2. As such, the left button
+was set to be interpreted as a press to the &ldquo;1&rdquo; button on the remote. Similarly,
+the right was set to be interpreted as a &ldquo;2&rdquo;.</p>
+<h4 id="remote-interrupts">Remote Interrupts<a href="#remote-interrupts" class="hanchor" ariaLabel="Anchor">#</a> </h4>
+<p>The remote makes use of 2 interrupts. The first is a trigger to the falling edge
+of the IR receiver, and the second is a timer. The timer will read how long
+passes between each falling edge when a remote is pressed, and interprets the
+data. A long perios of 1.6ms is interpreted as a 0, and a short period of 530µs
+is interpreted as a 1. The chart for each keys code can be seen below.</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">Key</th>
+          <th style="text-align: center">hex</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">0</td>
+          <td style="text-align: center">0x1f1f7788</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">1</td>
+          <td style="text-align: center">0x1f1fdf20</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">2</td>
+          <td style="text-align: center">0x1f1f5fa0</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">3</td>
+          <td style="text-align: center">0x1f1f9f60</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">4</td>
+          <td style="text-align: center">0x1f1fef10</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">5</td>
+          <td style="text-align: center">0x1f1f6f90</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">6</td>
+          <td style="text-align: center">0x1f1faf50</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">7</td>
+          <td style="text-align: center">0x1f1fcf30</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">8</td>
+          <td style="text-align: center">0x1f1f4fb0</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">9</td>
+          <td style="text-align: center">0x1f1f8f70</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Del</td>
+          <td style="text-align: center">0x1f1f07f8</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Enter</td>
+          <td style="text-align: center">0x1f1fe916</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Mute</td>
+          <td style="text-align: center">0x1f1f0ff0</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Last</td>
+          <td style="text-align: center">0x1f1f37c8</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="motor-correction-interrupts">Motor Correction Interrupts<a href="#motor-correction-interrupts" class="hanchor" ariaLabel="Anchor">#</a> </h4>
+<p>After initial disassembly of the vacuum, it was found that the 2 motors move at
+different rates. While the L289N does support control over PWM, it slowed the
+motors further than it should of. As such much testing was done to ensure the
+right motor would turn off for the right amount of time to continue moving
+straight. After much testing it was determined that the motor should be turned
+off every quarter second, and turned back on after 35ms.</p>
+<h3 id="aws">AWS<a href="#aws" class="hanchor" ariaLabel="Anchor">#</a> </h3>
+<p>Just because there is no account anymore, doesn&rsquo;t mean you cannot store a map.
+Amazon Web Services IOT Core was used to store the map and state of the device.
+This allows for not only a stored map, but also remote triggering via AWS.</p>
+<h3 id="loop">Loop<a href="#loop" class="hanchor" ariaLabel="Anchor">#</a> </h3>
+<p><img src="/Reimplementation_of_robot_vacuum/grim_26-03-13-1773461811.png" alt="Loop"></p>
+<p>At the beginning of the loop, it will check if 15s has passed, if it has it will
+call AWS to get the map and the desired state.</p>
+<h4 id="mapping-mode">Mapping Mode<a href="#mapping-mode" class="hanchor" ariaLabel="Anchor">#</a> </h4>
+<p>In mapping mode, you an control the robot with the remote or onboard buttons to
+define your map area. The controls are as follows:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Key</th>
+          <th>Action</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Turn Left 90 Degrees</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Move Forward 1 Foot</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Turn Right 90 Degrees</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Move Backward 1 Foot</td>
+      </tr>
+      <tr>
+          <td>Enter</td>
+          <td>Save map to AWS and Return to Original Spot</td>
+      </tr>
+  </tbody>
+</table>
+<p>As an additional feature, if the robot moves on a ledge and the accelerometer&rsquo;s
+Z-axis moves too much, it will go into panic and stop in place.</p>
+<p>You can see mapping mode in <a href="/Reimplementation_of_robot_vacuum/showcase/#demo-video">demo</a>.</p>
+<h4 id="cleaning-mode">Cleaning Mode<a href="#cleaning-mode" class="hanchor" ariaLabel="Anchor">#</a> </h4>
+<p>Upon entering cleaning mode, the vacuum will snake through its defined map,
+visiting every part of the array to clean the ground. It will simply start at an
+extreme corner of the area, and snake through the area.</p>
+<p>You can see cleaning mode in <a href="/Reimplementation_of_robot_vacuum/showcase/#demo-video">demo</a>.</p>
+<h1 id="demo-video">Demo Video<a href="#demo-video" class="hanchor" ariaLabel="Anchor">#</a> </h1>
+<figure>
+  <video controls width="400">
+    <source src="/Reimplementation_of_robot_vacuum/part1.mp4" type="video/mp4">
+  </video>
+  <figcaption>Demo Showing Mapping Mode</figcaption>
+</figure>
+<figure>
+  <video controls width="400">
+    <source src="/Reimplementation_of_robot_vacuum/part2.mp4" type="video/mp4">
+  </video>
+  <figcaption>Demo an already active map</figcaption>
+</figure>
 
       </div></div>
 
