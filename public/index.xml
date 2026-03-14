@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Reimplementing a Robot Vacuum</title>
-    <link>https://cryptoniac1.github.io/Reimplementation_of_robot_vacuum/</link>
+    <link>http://localhost:1313/Reimplementation_of_robot_vacuum/</link>
     <description>Recent content on Reimplementing a Robot Vacuum</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <atom:link href="https://cryptoniac1.github.io/Reimplementation_of_robot_vacuum/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/Reimplementation_of_robot_vacuum/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About</title>
-      <link>https://cryptoniac1.github.io/Reimplementation_of_robot_vacuum/about/</link>
+      <link>http://localhost:1313/Reimplementation_of_robot_vacuum/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://cryptoniac1.github.io/Reimplementation_of_robot_vacuum/about/</guid>
+      <guid>http://localhost:1313/Reimplementation_of_robot_vacuum/about/</guid>
       <description>&lt;p&gt;Have you ever wanted to completely control your robot vacuum? When the first&#xA;ones came out they needed no internet connection and did not leak all your data&#xA;to the company that controls them, but now to even function they need an&#xA;internet connection. I want something better, something I can control, something&#xA;that only reports what I want it to. With this site I will reimplement a Shark&#xA;Matrix Robot Vacuum to work via a remote control and via a configured AWS&#xA;server.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Showcase</title>
-      <link>https://cryptoniac1.github.io/Reimplementation_of_robot_vacuum/showcase/</link>
+      <link>http://localhost:1313/Reimplementation_of_robot_vacuum/showcase/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://cryptoniac1.github.io/Reimplementation_of_robot_vacuum/showcase/</guid>
-      <description>&lt;h1 id=&#34;demo-video&#34;&gt;Demo Video&lt;/h1&gt;&#xA;&lt;p&gt;&lt;img src=&#34;static/part1.mp4&#34; alt=&#34;Mapping Mode&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;static/part1.mp4&#34; alt=&#34;Automatic Clean Mode&#34;&gt;&lt;/p&gt;&#xA;&lt;h1 id=&#34;why&#34;&gt;Why?&lt;/h1&gt;&#xA;&lt;p&gt;Have you ever looked at your robot vacuum and been disappointed because you&#xA;don&amp;rsquo;t know what it&amp;rsquo;s doing? Do you hate&lt;/p&gt;&#xA;&lt;h1 id=&#34;shark-matrix-robot-vacuum&#34;&gt;Shark Matrix Robot Vacuum&lt;/h1&gt;&#xA;&lt;p&gt;&lt;img src=&#34;static/masked_image.png&#34; alt=&#34;Shark Matrix Vacuum&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;The vacuum I retrofitted&lt;/p&gt;</description>
+      <guid>http://localhost:1313/Reimplementation_of_robot_vacuum/showcase/</guid>
+      <description>&lt;h1 id=&#34;demo-video&#34;&gt;Demo Video&lt;/h1&gt;&#xA;&lt;p&gt;&lt;img src=&#34;static/part1.mp4&#34; alt=&#34;Mapping Mode&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;static/part1.mp4&#34; alt=&#34;Automatic Clean Mode&#34;&gt;&lt;/p&gt;&#xA;&lt;h1 id=&#34;why&#34;&gt;Why?&lt;/h1&gt;&#xA;&lt;p&gt;Have you ever looked at your robot vacuum and been disappointed because you&#xA;don&amp;rsquo;t know what it&amp;rsquo;s doing? Do you hate that to run your new robot vacuum you&#xA;need to have an always connected online account? Do you just want fun with an&#xA;old vacuum? This can fix 2 of those.&lt;/p&gt;&#xA;&lt;h1 id=&#34;shark-matrix-robot-vacuum&#34;&gt;Shark Matrix Robot Vacuum&lt;/h1&gt;&#xA;&lt;p&gt;&lt;img src=&#34;static/masked_image.png&#34; alt=&#34;Shark Matrix Vacuum&#34;&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
