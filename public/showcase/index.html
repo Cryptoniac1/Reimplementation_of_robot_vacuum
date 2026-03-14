@@ -188,6 +188,28 @@ replace. Not to mention that when you get it new, you have to make an account to
 use most of the functionality. Wouldn&rsquo;t it be so much better if you can control
 it with a remote and define your area? Well that&rsquo;s exactly what this project
 does.</p>
+<h1 id="toc">TOC<a href="#toc" class="hanchor" ariaLabel="Anchor">#</a> </h1>
+<ul>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#demo-video">Demo</a></li>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#hardware">Hardware</a>
+<ul>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#texas-instrument-cc3200">Texas Instrument CC3200</a></li>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#adafruit-eyespi-oled">Adafruit OLED</a></li>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#remote">Remote</a></li>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#ir-receiver">IR Receiver</a></li>
+</ul>
+</li>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#hardware">Architecture</a>
+<ul>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#electrical">Electrical</a>
+<ul>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#pinout-used">Pinout of CC3200</a></li>
+</ul>
+</li>
+<li><a href="/Reimplementation_of_robot_vacuum/showcase/#digital">Digital</a></li>
+</ul>
+</li>
+</ul>
 <h1 id="demo-video">Demo Video<a href="#demo-video" class="hanchor" ariaLabel="Anchor">#</a> </h1>
 <figure>
   <video controls width="400">
@@ -206,7 +228,138 @@ does.</p>
 <p><img src="/Reimplementation_of_robot_vacuum/board.png" alt="CC3200"></p>
 <p>The TI CC3200 is a board that has many built-in sensors, including an
 accelerometer, 4 hardware timers, and over 15 addressable GPIO pins. It also has
-built-in support for I2C, SPI, and many other protocols.</p>
+built-in support for I2C, SPI, and many other protocols. This board was the
+brains of the operation that controlled the motors, and the accelerometer was
+used for detection of whether or not it was on an edge. The pinout for this
+board can be viewed <a href="/Reimplementation_of_robot_vacuum/showcase/#pinout-used">here</a>.</p>
+<h2 id="adafruit-eyespi-oled">Adafruit EYESPI OLED<a href="#adafruit-eyespi-oled" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p><img src="/Reimplementation_of_robot_vacuum/1431-18.jpg" alt="Adafruit OLED"></p>
+<p>To display information about the vacuum to the user the Adafruit EYESPI OLED was
+used. This displays the current mode and displays how to control the vacuum. As
+the name implies, it communicates with the CC3200 over SPI.</p>
+<h2 id="remote">Remote<a href="#remote" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p><img src="/Reimplementation_of_robot_vacuum/masked_remote.png" alt="Remote"></p>
+<p>An AT&amp;T universal remote was used to control the robot. It had tv code: 1156,
+which corresponds to a Samsung TV code. To view how it controlled the program
+see <a href="/Reimplementation_of_robot_vacuum/showcase/#digital">digital</a>.</p>
+<h2 id="ir-receiver">IR Receiver<a href="#ir-receiver" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<p><img src="/Reimplementation_of_robot_vacuum/ir-module-package.png" alt="IR receiver"></p>
+<p>I used a TSOP311xx IR receiver to receive input from the
+<a href="/Reimplementation_of_robot_vacuum/showcase#remote">remote</a>. The output was wired to pin
+8 of the CC3200, and was given 5v input from the battery with a low pass filter
+of a 100Ω resistor and a 100µF capacitor. Its signal was controlled via
+interrupts.</p>
+<h1 id="architecture">Architecture<a href="#architecture" class="hanchor" ariaLabel="Anchor">#</a> </h1>
+<h2 id="electrical">Electrical<a href="#electrical" class="hanchor" ariaLabel="Anchor">#</a> </h2>
+<h3 id="pinout-used">Pinout used<a href="#pinout-used" class="hanchor" ariaLabel="Anchor">#</a> </h3>
+<p>The wiring of the board is as follows:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Pin</th>
+          <th>Use</th>
+          <th>Connection</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Accelerometer SCL</td>
+          <td>Accelerometer</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Accelerometer SDA</td>
+          <td>Accelerometer</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>OLED Reset</td>
+          <td>OLED pin 4</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Onboard Switch</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>OLED SCK</td>
+          <td>OLED pin 2</td>
+      </tr>
+      <tr>
+          <td>6</td>
+          <td>Left Motor Forward</td>
+          <td>LN289 in 1</td>
+      </tr>
+      <tr>
+          <td>7</td>
+          <td>OLED MOSI</td>
+          <td>OLED pin 1</td>
+      </tr>
+      <tr>
+          <td>8</td>
+          <td>IR receiver pin</td>
+          <td>IR drain</td>
+      </tr>
+      <tr>
+          <td>15</td>
+          <td>Onboard Switch</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>18</td>
+          <td>Left Motor Backward</td>
+          <td>LN289 in 2</td>
+      </tr>
+      <tr>
+          <td>50</td>
+          <td>OLED CS</td>
+          <td>OLED pin 50</td>
+      </tr>
+      <tr>
+          <td>53</td>
+          <td>Crash Switch</td>
+          <td>(Unimplemented)</td>
+      </tr>
+      <tr>
+          <td>55</td>
+          <td>UART TX</td>
+          <td>debugging</td>
+      </tr>
+      <tr>
+          <td>57</td>
+          <td>UART RX</td>
+          <td>debugging</td>
+      </tr>
+      <tr>
+          <td>58</td>
+          <td>Right Motor Backward</td>
+          <td>LN289 in3</td>
+      </tr>
+      <tr>
+          <td>59</td>
+          <td>Crash Switch</td>
+          <td>(Unimplemented)</td>
+      </tr>
+      <tr>
+          <td>60</td>
+          <td>OLED DC</td>
+          <td>OLED pin 3</td>
+      </tr>
+      <tr>
+          <td>61</td>
+          <td>Right motor forward</td>
+          <td>LN289 in4</td>
+      </tr>
+      <tr>
+          <td>64</td>
+          <td>Cleaning Motor</td>
+          <td>LN289 (2) in4</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="digital">Digital<a href="#digital" class="hanchor" ariaLabel="Anchor">#</a> </h2>
 
       </div></div>
 
