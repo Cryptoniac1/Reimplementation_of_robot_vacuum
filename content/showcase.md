@@ -68,7 +68,9 @@ can be viewed [here](/Reimplementation_of_robot_vacuum/showcase/#pinout-used).
 
 To display information about the vacuum to the user the Adafruit EYESPI OLED was
 used. This displays the current mode and displays how to control the vacuum. As
-the name implies, it communicates with the CC3200 over SPI.
+the name implies, it communicates with the CC3200 over SPI. Unfortunately during
+testing the display used stopped functioning as it was old. As such you cannot
+see it in the demo video.
 
 ## Remote
 
